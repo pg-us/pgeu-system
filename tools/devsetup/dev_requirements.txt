@@ -9,7 +9,7 @@ cryptography
 flup
 httplib2
 psycopg2-binary
-pycryptodomex==3.6.1
+pycryptodomex==3.7.0
 reportlab>=3.5.59,<3.7
 python-dateutil
 requests
