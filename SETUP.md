@@ -1,10 +1,34 @@
-1. Open directory in VSCode, use the provided dev container. This configures a good version of python and sets up postgres with the right credentials.
-2. Read through, and _then_ run `./install.sh`
-3. Run `python3 manage.py runserver`
+# Development setup (podman)
 
-If using a skin:
-1. Add something like the following to `local_settings.py`: `SYSTEM_SKIN_DIRECTORY = "/workspaces/pgusweb"`
-2. Note that the path is absolute and relative to the dev container, not the local filesystem.
-3. This will connect templates, but static assets will need to be symlinked and adding to `.gitignore` (or `.git/info/exclude`)
+Requirements: rootless podman ≥ 4 and the `pgusweb` skin checked out as a
+sibling of this repo (or point `PGUSWEB_DIR` elsewhere).
 
-The _correct_ way to handle the skins is to correctly configure the uwsgi server, but this is simpler and works for now.
+```
+tools/podman-dev/up.sh
+```
+
+That builds the app image, creates the `pgeu-dev` pod (postgres 17 + uwsgi),
+runs migrations, seeds a superuser, and serves:
+
+- http://localhost:8012/ — the site, with the PgUS skin active (templates,
+  URLs, *and* static assets — served via uwsgi `static-map`)
+- admin login: `testuser` / `testpass` (community auth is disabled in dev via
+  `tools/podman-dev/config/pgeu_system_override_settings.py`)
+- postgres on `127.0.0.1:5445` for host tools (`PGEU_DBPORT=0` to disable,
+  password `postgresqleu`)
+
+Edits to Python code reload automatically (`py-autoreload`); template and
+static changes are picked up immediately. Configuration lives in
+`tools/podman-dev/config/` as `pgeu_system_global_settings` /
+`pgeu_system_override_settings` modules on `PYTHONPATH` — do **not** create
+`postgresqleu/local_settings.py`; it loads mid-chain and fights the skin.
+
+Other commands, all in `tools/podman-dev/`:
+
+| command | effect |
+|---|---|
+| `down.sh` | stop and remove the pod (keeps DB data) |
+| `reset.sh` | remove pod **and** the `pgeu-pgdata` volume (fresh DB) |
+| `logs.sh [app\|db]` | follow logs |
+| `shell.sh [app\|db\|django\|psql]` | interactive shells |
+| `checks/run-checks.sh` | verify the whole environment end to end |
