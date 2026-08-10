@@ -2,7 +2,6 @@
 
 set -u
 
-POD="${PGEU_POD:-pgeu-dev}"
 APP="${PGEU_APP:-pgeu-app}"
 DB="${PGEU_DB:-pgeu-db}"
 BASE_URL="${PGEU_BASE_URL:-http://localhost:8012}"
