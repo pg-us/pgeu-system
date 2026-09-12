@@ -5,6 +5,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/../.."
 PGEU_DIR="$(pwd)"
+
+# Machine-local overrides (untracked), e.g. PGEU_DBPORT when 5432 is taken.
+[ -f tools/podman-dev/local.env ] && . tools/podman-dev/local.env
 PGUSWEB_DIR="${PGUSWEB_DIR:-$(dirname "$PGEU_DIR")/pgusweb}"
 
 POD="${PGEU_POD:-pgeu-dev}"
@@ -18,7 +21,7 @@ podman build -t "$IMAGE" -f tools/podman-dev/Containerfile .
 
 if ! podman pod exists "$POD"; then
     # 8012 = uwsgi http; PGEU_DBPORT = postgres for host tools (0 = don't publish)
-    DBPORT="${PGEU_DBPORT:-5445}"
+    DBPORT="${PGEU_DBPORT:-5432}"
     PUBLISH_DB=()
     [ "$DBPORT" != "0" ] && PUBLISH_DB=(-p "127.0.0.1:$DBPORT:5432")
     podman pod create --name "$POD" -p 8012:8012 "${PUBLISH_DB[@]}"
