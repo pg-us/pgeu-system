@@ -1,5 +1,5 @@
 # Stage-1 settings (pgeu_system_global_settings): loaded before the skin.
-# Dev-only values for the podman-dev environment. See tools/podman-dev/PLAN.md.
+# Dev-only values for the podman-dev environment. See tools/podman-dev/README.md.
 # Anything the skin must NOT override belongs in pgeu_system_override_settings.
 
 DATABASES = {
