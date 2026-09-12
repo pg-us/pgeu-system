@@ -14,8 +14,9 @@ runs migrations, seeds a superuser, and serves:
   URLs, *and* static assets — served via uwsgi `static-map`)
 - admin login: `testuser` / `testpass` (community auth is disabled in dev via
   `tools/podman-dev/config/pgeu_system_override_settings.py`)
-- postgres on `127.0.0.1:5445` for host tools (`PGEU_DBPORT=0` to disable,
-  password `postgresqleu`)
+- postgres on `127.0.0.1:5432` for host tools (`PGEU_DBPORT=0` to disable,
+  password `postgresqleu`; set overrides in `tools/podman-dev/local.env`
+  if 5432 is taken on your machine)
 
 Edits to Python code reload automatically (`py-autoreload`); template and
 static changes are picked up immediately. Configuration lives in
