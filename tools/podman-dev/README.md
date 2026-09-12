@@ -50,10 +50,9 @@ above. `checks/00-prereqs.sh` fails if one exists.
 - **Ports**: DB published on `127.0.0.1:5432` (the postgres default);
   `PGEU_DBPORT` overrides, `0` disables. If 5432 is taken on your machine,
   set the override in `local.env` (untracked, sourced by `up.sh`).
-- **Pins**: `Pillow==9.5.0` and `MarkupSafe==2.0.1` in
-  `tools/devsetup/dev_requirements.txt` are the minimal py3.11-compatible
-  bumps (reportlab 3.6.13 needs Pillow≥9; MarkupSafe 2.0.1 is the last with
-  `soft_unicode` for Jinja2 2.10). Candidates for upstreaming to postgresqleu.
+- **Pins**: `Pillow==9.5.0` and `pycryptodomex==3.7.0` in
+  `tools/devsetup/dev_requirements.txt` replace pins that no longer install
+  on Python 3.11. Submitted upstream.
 
 ## Verification
 
