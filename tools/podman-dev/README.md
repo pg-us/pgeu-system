@@ -47,8 +47,9 @@ above. `checks/00-prereqs.sh` fails if one exists.
   load-bearing.
 - **Fonts**: `FONTROOT` expects `.../ttf-dejavu`; bookworm ships
   `.../dejavu`, symlinked in the image.
-- **Ports**: DB published on `127.0.0.1:5445` (5433/5440 were taken here);
-  `PGEU_DBPORT` overrides, `0` disables.
+- **Ports**: DB published on `127.0.0.1:5432` (the postgres default);
+  `PGEU_DBPORT` overrides, `0` disables. If 5432 is taken on your machine,
+  set the override in `local.env` (untracked, sourced by `up.sh`).
 - **Pins**: `Pillow==9.5.0` and `MarkupSafe==2.0.1` in
   `tools/devsetup/dev_requirements.txt` are the minimal py3.11-compatible
   bumps (reportlab 3.6.13 needs Pillow≥9; MarkupSafe 2.0.1 is the last with
