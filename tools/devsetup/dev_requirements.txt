@@ -1,9 +1,7 @@
 Django>=5.2,<5.3
 Jinja2>=2.10,<2.11
 Markdown==3.0.1
-# MarkupSafe 2.0.1 is the last release keeping soft_unicode for Jinja2 2.10
-MarkupSafe==2.0.1
-# Pillow 9.5 is required by reportlab 3.6.13 (the first with py3.11 wheels)
+MarkupSafe==1.1.0
 Pillow==9.5.0
 PyJWT
 argparse
